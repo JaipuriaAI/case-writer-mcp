@@ -1,0 +1,35 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+
+# Python (the renderer is Python; protect against bytecode + venvs sneaking in)
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+.python-version
+
+# Node / editor leakage (in case anyone clones and runs tooling)
+node_modules/
+.idea/
+.vscode/
+*.swp
+*~
+
+# Generated case output — these belong in the user's workspace, never in the skill repo
+cases/
+case-writer-learnings.md
+case-writer-learnings.jsonl
+case-writer-promotion.patch
+scripts/render_case.py        # local bootstrap from publish skill — not the canonical asset
+templates/                    # local bootstrap from publish skill — not the canonical asset
+
+# Build / temp
+*.pdf.tmp
+*.html.tmp
+.DS_Store?
+ehthumbs.db
+Thumbs.db
