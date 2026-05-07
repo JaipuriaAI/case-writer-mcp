@@ -61,10 +61,15 @@ for skill_dir in skills/*/; do
   echo "── ${skill#skills/} ──"
 
   # Extract every `references/*.md` and `assets/<dir>/<file>` cited in the SKILL.md.
-  # We grep for the pattern, dedupe, and ignore trailing slashes (e.g. "assets/templates/").
-  cited=$(grep -hoE '(references|assets)/[a-zA-Z0-9._/-]+' "$skill_md" \
+  # Strict rules:
+  #   - Path must end in a real extension (.md, .html, .css, .py, .json, .txt) OR be a
+  #     bare directory like `assets/templates/` (handled by the directory expansion below).
+  #   - Reject placeholder filenames that look pathlike but are documentation examples
+  #     (e.g. `references/X.md`, `assets/<path>`, `references/foo.bar.baz`).
+  cited=$(grep -hoE '(references|assets)/[a-zA-Z0-9_-][a-zA-Z0-9._/-]*\.(md|html|css|py|json|txt)|(references|assets)/[a-zA-Z0-9_-]+/' "$skill_md" \
             | sed 's:/$::' \
-            | sort -u)
+            | sort -u \
+            | grep -vE '/X\.[a-z]+$|/<[a-z]+>' || true)
 
   while IFS= read -r path; do
     [[ -z "$path" ]] && continue
