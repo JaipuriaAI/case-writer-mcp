@@ -6,6 +6,13 @@ license: MIT
 
 # case-writer-research — Phase 1: Research & DRAFT Spec
 
+> **How to load files from this skill's bundled `references/` and `assets/`:**
+> When the steps below tell you to "load `references/X.md`" or "read `assets/<path>`" (e.g. `assets/templates/case-template.html`), invoke the host's `read_skill_file` tool (or equivalent) with:
+> - `slug`: `case-writer-research` — this is THIS skill's slug; do NOT use a parent name like `case-writer` (no such slug exists), and do NOT use the slug of any other connected skill (e.g. `atomic-case-writer` is a separate skill on a different connector — never load from it)
+> - `path`: the path exactly as stated, e.g. `references/anti-patterns.md`
+>
+> The 8 valid skill slugs in this suite are: `case-writer-research`, `case-writer-plan`, `case-writer-draft`, `case-writer-teach`, `case-writer-audit`, `case-writer-publish`, `case-writer-god-mode`, `case-writer-learn`. References cited by this skill live ONLY inside this skill's folder.
+
 > Reconstruct the event from public sources, identify the protagonist, assess case-worthiness, select a case type, and write a `DRAFT` spec.
 
 ## When to use

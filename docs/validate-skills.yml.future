@@ -1,0 +1,74 @@
+name: validate-skills
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  sync-check:
+    name: Per-skill references stay in sync with canonical /references/
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify each skills/<name>/references/* matches the canonical source
+        run: ./scripts/sync-skills.sh --check
+
+  frontmatter-check:
+    name: SKILL.md frontmatter is well-formed
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Each SKILL.md has name, description, license — and only those
+        run: |
+          set -e
+          fail=0
+          for f in skills/*/SKILL.md; do
+            # Extract YAML between the first two --- lines
+            fm=$(awk '/^---/{c++; next} c==1{print} c==2{exit}' "$f")
+            for required in name description license; do
+              if ! echo "$fm" | grep -q "^$required:"; then
+                echo "::error file=$f::Frontmatter missing required key: $required"
+                fail=1
+              fi
+            done
+            # Reject Claude-Code slash-command keys that don't belong in skills
+            for forbidden in allowed-tools argument-hint model; do
+              if echo "$fm" | grep -q "^$forbidden:"; then
+                echo "::error file=$f::Frontmatter contains slash-command-only key: $forbidden"
+                fail=1
+              fi
+            done
+          done
+          if [ $fail -ne 0 ]; then
+            echo ""
+            echo "Frontmatter validation failed. Each SKILL.md must declare exactly:"
+            echo "  name:        <skill name>"
+            echo "  description: <one paragraph triggering description>"
+            echo "  license:     <SPDX or text>"
+            echo "and must NOT carry slash-command-only keys (allowed-tools, argument-hint, model)."
+            exit 1
+          fi
+
+  no-stale-tokens:
+    name: No \${CLAUDE_PLUGIN_ROOT} or hardcoded user paths leaked back in
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Grep skills/ and references/ for forbidden tokens
+        run: |
+          set -e
+          fail=0
+          if grep -rln 'CLAUDE_PLUGIN_ROOT' skills/ references/; then
+            echo "::error::\${CLAUDE_PLUGIN_ROOT} leaked into skills/ or references/"
+            fail=1
+          fi
+          if grep -rln '/Users/shivakakkar/cases' skills/ references/; then
+            echo "::error::Hardcoded user case-output path leaked into skills/ or references/"
+            fail=1
+          fi
+          if [ $fail -ne 0 ]; then exit 1; fi
+          echo "Path hygiene clean."

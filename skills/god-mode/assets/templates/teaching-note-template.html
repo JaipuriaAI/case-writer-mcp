@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teaching Note — {{TITLE}}</title>
+  <style>
+    /* INLINE STYLESHEET — inserted by :publish phase from case-style.css */
+    {{INLINE_CSS}}
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       CONFIDENTIAL BANNER — coral red, print-visible
+       ============================================================ -->
+  <div class="tn-confidential">
+    &#x26A0;&nbsp; Instructor's Teaching Note &mdash; Not For Student Distribution &nbsp;&#x26A0;
+  </div>
+
+
+  <!-- ============================================================
+       TN COVER HEADER
+       ============================================================ -->
+  <div class="tn-cover-bar">
+    <div class="tn-series-label">Rehearsal Case Series</div>
+    <div class="tn-meta">Teaching Note &bull; {{CASE_NUMBER}} &bull; {{PUBLISH_DATE}}</div>
+  </div>
+
+  <h1 class="tn-title">{{TITLE}}</h1>
+  <p class="tn-byline">Teaching Note &mdash; Instructor Use Only</p>
+
+
+  <!-- ============================================================
+       SECTION 1 — CASE SUMMARY (100–150 words, no outcome spoilers)
+       ============================================================ -->
+  <h2 class="tn-section-heading">1. Case Summary</h2>
+  <p>{{CASE_SUMMARY}}</p>
+
+
+  <!-- ============================================================
+       SECTION 2 — LEARNING OBJECTIVES
+       Each objective: Bloom's verb (bold) + text + bloom-tag.
+       bloom-tag classes: bloom-remember, bloom-understand, bloom-apply,
+                          bloom-analyze, bloom-evaluate, bloom-create
+       ============================================================ -->
+  <h2 class="tn-section-heading">2. Learning Objectives</h2>
+  <p>By the end of class discussion, students will be able to:</p>
+  <ol>
+    <li>
+      <strong>{{LO_1_VERB}}</strong> {{LO_1_TEXT}}
+      <span class="bloom-tag {{LO_1_BLOOM_CLASS}}">{{LO_1_BLOOM}}</span>
+    </li>
+    <li>
+      <strong>{{LO_2_VERB}}</strong> {{LO_2_TEXT}}
+      <span class="bloom-tag {{LO_2_BLOOM_CLASS}}">{{LO_2_BLOOM}}</span>
+    </li>
+    <li>
+      <strong>{{LO_3_VERB}}</strong> {{LO_3_TEXT}}
+      <span class="bloom-tag {{LO_3_BLOOM_CLASS}}">{{LO_3_BLOOM}}</span>
+    </li>
+    <!-- Add <li> blocks for LO_4, LO_5 if needed -->
+  </ol>
+
+
+  <!-- ============================================================
+       SECTION 3 — KEY ISSUES (3–6 pedagogical tensions)
+       ============================================================ -->
+  <h2 class="tn-section-heading">3. Key Issues</h2>
+  <p>The case is designed to surface the following core tensions:</p>
+  <ul>
+    <li><strong>{{KEY_ISSUE_1_NAME}}:</strong> {{KEY_ISSUE_1_DESC}}</li>
+    <li><strong>{{KEY_ISSUE_2_NAME}}:</strong> {{KEY_ISSUE_2_DESC}}</li>
+    <li><strong>{{KEY_ISSUE_3_NAME}}:</strong> {{KEY_ISSUE_3_DESC}}</li>
+    <!-- Add <li> blocks for KEY_ISSUE_4, KEY_ISSUE_5 if needed -->
+  </ul>
+
+
+  <!-- ============================================================
+       SECTION 4 — ASSIGNMENT QUESTIONS (pre-class prep)
+       ============================================================ -->
+  <h2 class="tn-section-heading">4. Assignment Questions</h2>
+  <p>Students should prepare the following questions before class:</p>
+  <ol>
+    <li>{{ASSIGN_Q_1}}</li>
+    <li>{{ASSIGN_Q_2}}</li>
+    <li>{{ASSIGN_Q_3}}</li>
+    <!-- Add <li> for ASSIGN_Q_4, ASSIGN_Q_5 if needed -->
+  </ol>
+
+
+  <!-- ============================================================
+       SECTION 5a — OPTIONS ANALYSIS (Instructor Framework)
+       In Modes A-C: appears ONLY here. In Mode D: also in case body.
+       Students generate options BEFORE instructor reveals this section.
+       ============================================================ -->
+  <h2 class="tn-section-heading">5a. Options Analysis (Instructor Framework)</h2>
+  <p><em>Do not distribute this section to students. Students must generate their own options during discussion before the instructor reveals this analysis.</em></p>
+  {{OPTIONS_ANALYSIS}}
+
+
+  <!-- ============================================================
+       SECTION 6 — DISCUSSION QUESTIONS & SUGGESTED ANSWERS
+       Each .discussion-q block:
+         .q-text    — bold question + bloom-tag
+         .q-answer  — suggested answer
+         .theory-box — optional framework connection
+         <p><em>Facilitation note:</em> — instructor guidance
+       Duplicate the block for DQ_2, DQ_3, DQ_4, etc.
+       ============================================================ -->
+  <h2 class="tn-section-heading">6. Discussion Questions &amp; Suggested Answers</h2>
+
+  <!-- Discussion Question 1 -->
+  <div class="discussion-q">
+    <div class="q-text">
+      Q1. {{DQ_1_TEXT}}
+      <span class="bloom-tag {{DQ_1_BLOOM_CLASS}}">{{DQ_1_BLOOM}}</span>
+    </div>
+    <div class="q-answer">
+      <p><strong>Suggested answer:</strong> {{DQ_1_ANSWER}}</p>
+      <div class="theory-box">
+        <div class="theory-box-title">{{DQ_1_THEORY_NAME}}</div>
+        <p>{{DQ_1_THEORY_BODY}}</p>
+      </div>
+      <p><em>Facilitation note:</em> {{DQ_1_FACILITATION}}</p>
+    </div>
+  </div>
+
+  <!-- Discussion Question 2 -->
+  <div class="discussion-q">
+    <div class="q-text">
+      Q2. {{DQ_2_TEXT}}
+      <span class="bloom-tag {{DQ_2_BLOOM_CLASS}}">{{DQ_2_BLOOM}}</span>
+    </div>
+    <div class="q-answer">
+      <p><strong>Suggested answer:</strong> {{DQ_2_ANSWER}}</p>
+      <div class="theory-box">
+        <div class="theory-box-title">{{DQ_2_THEORY_NAME}}</div>
+        <p>{{DQ_2_THEORY_BODY}}</p>
+      </div>
+      <p><em>Facilitation note:</em> {{DQ_2_FACILITATION}}</p>
+    </div>
+  </div>
+
+  <!-- Discussion Question 3 -->
+  <div class="discussion-q">
+    <div class="q-text">
+      Q3. {{DQ_3_TEXT}}
+      <span class="bloom-tag {{DQ_3_BLOOM_CLASS}}">{{DQ_3_BLOOM}}</span>
+    </div>
+    <div class="q-answer">
+      <p><strong>Suggested answer:</strong> {{DQ_3_ANSWER}}</p>
+      <div class="theory-box">
+        <div class="theory-box-title">{{DQ_3_THEORY_NAME}}</div>
+        <p>{{DQ_3_THEORY_BODY}}</p>
+      </div>
+      <p><em>Facilitation note:</em> {{DQ_3_FACILITATION}}</p>
+    </div>
+  </div>
+
+  <!-- Discussion Question 4 -->
+  <div class="discussion-q">
+    <div class="q-text">
+      Q4. {{DQ_4_TEXT}}
+      <span class="bloom-tag {{DQ_4_BLOOM_CLASS}}">{{DQ_4_BLOOM}}</span>
+    </div>
+    <div class="q-answer">
+      <p><strong>Suggested answer:</strong> {{DQ_4_ANSWER}}</p>
+      <div class="theory-box">
+        <div class="theory-box-title">{{DQ_4_THEORY_NAME}}</div>
+        <p>{{DQ_4_THEORY_BODY}}</p>
+      </div>
+      <p><em>Facilitation note:</em> {{DQ_4_FACILITATION}}</p>
+    </div>
+  </div>
+
+
+  <!-- ============================================================
+       SECTION 7 — RELEVANT THEORY CONNECTIONS (3–5 frameworks)
+       ============================================================ -->
+  <h2 class="tn-section-heading">7. Relevant Theory Connections</h2>
+
+  <div class="theory-box">
+    <div class="theory-box-title">{{THEORY_1_NAME}} — {{THEORY_1_AUTHOR}}</div>
+    <p>{{THEORY_1_CONNECTION}}</p>
+    <p><em>Suggested reading:</em> {{THEORY_1_READING}}</p>
+  </div>
+
+  <div class="theory-box">
+    <div class="theory-box-title">{{THEORY_2_NAME}} — {{THEORY_2_AUTHOR}}</div>
+    <p>{{THEORY_2_CONNECTION}}</p>
+    <p><em>Suggested reading:</em> {{THEORY_2_READING}}</p>
+  </div>
+
+  <div class="theory-box">
+    <div class="theory-box-title">{{THEORY_3_NAME}} — {{THEORY_3_AUTHOR}}</div>
+    <p>{{THEORY_3_CONNECTION}}</p>
+    <p><em>Suggested reading:</em> {{THEORY_3_READING}}</p>
+  </div>
+
+  <!-- Add .theory-box blocks for THEORY_4, THEORY_5 if needed -->
+
+
+  <!-- ============================================================
+       SECTION 8 — TEACHING PLAN
+       {{TEACHING_PLAN_TABLE}} renders as a complete <table>
+       Columns: Time | Activity | Discussion Focus
+       ============================================================ -->
+  <h2 class="tn-section-heading">8. Teaching Plan</h2>
+  {{TEACHING_PLAN_TABLE}}
+
+
+  <!-- ============================================================
+       SECTION 9 — BOARD PLAN (3 columns via floats)
+       Facts → Analysis → Recommendations
+       ============================================================ -->
+  <h2 class="tn-section-heading">9. Board Plan</h2>
+  <p>Suggested whiteboard layout for class discussion:</p>
+
+  <div class="board-plan">
+    <div class="board-panel">
+      <div class="board-panel-heading">Facts</div>
+      {{BOARD_PLAN_PANEL_1}}
+    </div>
+    <div class="board-panel">
+      <div class="board-panel-heading">Analysis</div>
+      {{BOARD_PLAN_PANEL_2}}
+    </div>
+    <div class="board-panel">
+      <div class="board-panel-heading">Recommendations</div>
+      {{BOARD_PLAN_PANEL_3}}
+    </div>
+  </div>
+
+
+  <!-- ============================================================
+       SECTION 10 — WHAT ACTUALLY HAPPENED (EPILOGUE)
+       Gold border box — reveal AFTER students commit to a position.
+       ============================================================ -->
+  <h2 class="tn-section-heading">10. What Actually Happened</h2>
+  <p><em>(Reveal at end of class discussion, after students have committed to a position.)</em></p>
+
+  <div class="epilogue-box">
+    <div class="epilogue-box-label">The Epilogue</div>
+    {{EPILOGUE}}
+  </div>
+
+
+  <!-- ============================================================
+       SECTION 11 — RESEARCH METHODOLOGY
+       Disclose data sources, access method, tier system.
+       ============================================================ -->
+  <h2 class="tn-section-heading">11. Research Methodology</h2>
+
+  <div class="research-method">
+    <div class="research-method-label">Methodology Disclosure</div>
+    {{RESEARCH_METHOD}}
+  </div>
+
+
+  <!-- ============================================================
+       SECTION 12 — SUPPLEMENTARY READING (5–8 items)
+       Format: Author(s), "Title," Publication, Year. [annotation]
+       ============================================================ -->
+  <h2 class="tn-section-heading">12. Supplementary Reading</h2>
+  <ol class="supp-reading">
+    {{SUPP_READING}}
+  </ol>
+
+</body>
+</html>

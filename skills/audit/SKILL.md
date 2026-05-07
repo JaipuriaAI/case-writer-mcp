@@ -6,6 +6,13 @@ license: MIT
 
 # case-writer-audit — Phase 5: 6-Role Audit & Rectification
 
+> **How to load files from this skill's bundled `references/` and `assets/`:**
+> When the steps below tell you to "load `references/X.md`" or "read `assets/<path>`" (e.g. `assets/templates/case-template.html`), invoke the host's `read_skill_file` tool (or equivalent) with:
+> - `slug`: `case-writer-audit` — this is THIS skill's slug; do NOT use a parent name like `case-writer` (no such slug exists), and do NOT use the slug of any other connected skill (e.g. `atomic-case-writer` is a separate skill on a different connector — never load from it)
+> - `path`: the path exactly as stated, e.g. `references/anti-patterns.md`
+>
+> The 8 valid skill slugs in this suite are: `case-writer-research`, `case-writer-plan`, `case-writer-draft`, `case-writer-teach`, `case-writer-audit`, `case-writer-publish`, `case-writer-god-mode`, `case-writer-learn`. References cited by this skill live ONLY inside this skill's folder.
+
 > 6 parallel audit roles evaluate the complete case packet. HARD issues block publication. MEDIUM issues require user approval. All issues must be resolved before status advances to `AUDITED`.
 
 ## When to use

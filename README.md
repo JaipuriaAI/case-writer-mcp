@@ -66,15 +66,23 @@ Everything else — anti-pattern definitions, source tier hierarchy, decision-po
 
 ---
 
-## Repo layout (chosen explicitly: root-level `references/`)
+## Repo layout (canonical at root, fanned out per skill)
 
-The skills-over-mcp specification is layout-agnostic. This repo intentionally stores the 14 shared protocol files **once** at the repo root rather than duplicating them inside every skill folder. This keeps the canonical knowledge in a single place; updating `anti-patterns.md` flows to all eight skills automatically.
+The skills-over-mcp file resolver scopes paths inside a SKILL.md to the **skill's own directory tree**, not the repo root. So every reference and asset a SKILL.md cites must live under that skill's folder.
+
+To keep maintenance sane, this repo uses a **canonical-plus-fan-out pattern**:
+
+- `/references/` and `/assets/` at the repo root are the **source of truth**. Edit only these.
+- `scripts/sync-skills.sh` reads each `skills/*/SKILL.md`, finds every `references/X.md` and `assets/...` path it cites, and copies the matching file into `skills/<name>/references/X.md` (or `skills/<name>/assets/...`). Only the files a skill actually cites are copied — each skill stays minimal.
+- A pre-commit / CI check (`./scripts/sync-skills.sh --check`) refuses to merge if the per-skill copies are stale relative to the canonical sources.
 
 ```
 .
-├─ README.md                                # this file
-├─ LICENSE                                  # MIT
-├─ references/                              # 14 canonical protocols, loaded by SKILL.md files
+├─ README.md
+├─ LICENSE
+├─ scripts/
+│  └─ sync-skills.sh                        # run before every push (or via pre-commit hook)
+├─ references/                              # ─── canonical sources ───
 │  ├─ anti-patterns.md                      # AP1–AP15 with detection heuristics
 │  ├─ case-spec-template.md                 # the spec document format
 │  ├─ case-type-taxonomy.md                 # 8 case types + selection flowchart
@@ -89,25 +97,63 @@ The skills-over-mcp specification is layout-agnostic. This repo intentionally st
 │  ├─ status-definitions.md                 # spec status validation + transitions
 │  ├─ teaching-note-protocol.md             # 12 mandatory TN sections, tone discipline
 │  └─ writing-standards.md                  # tense, prose, international audience
-├─ assets/
+├─ assets/                                  # ─── canonical sources ───
 │  ├─ templates/
 │  │  ├─ case-template.html
 │  │  ├─ teaching-note-template.html
 │  │  └─ case-style.css
 │  └─ scripts/
 │     └─ render_case.py                     # canonical renderer (Markdown→HTML→PDF, bootstrapped on first publish)
-└─ skills/
-   ├─ research/SKILL.md
-   ├─ plan/SKILL.md
-   ├─ draft/SKILL.md
-   ├─ teach/SKILL.md
-   ├─ audit/SKILL.md
-   ├─ publish/SKILL.md
-   ├─ god-mode/SKILL.md
-   └─ learn/SKILL.md
+└─ skills/                                  # ─── what skillsovermcp.com serves ───
+   ├─ research/
+   │  ├─ SKILL.md
+   │  └─ references/                        # subset of /references/ this skill cites
+   ├─ plan/
+   │  ├─ SKILL.md
+   │  └─ references/
+   ├─ draft/
+   │  ├─ SKILL.md
+   │  ├─ references/
+   │  └─ assets/templates/case-template.html
+   ├─ teach/
+   │  ├─ SKILL.md
+   │  ├─ references/
+   │  └─ assets/templates/teaching-note-template.html
+   ├─ audit/
+   │  ├─ SKILL.md
+   │  └─ references/
+   ├─ publish/
+   │  ├─ SKILL.md
+   │  ├─ references/
+   │  └─ assets/                            # full templates + render_case.py
+   ├─ god-mode/
+   │  ├─ SKILL.md
+   │  ├─ references/                        # all 14 (god-mode loads everything)
+   │  └─ assets/templates/
+   └─ learn/
+      ├─ SKILL.md
+      └─ references/                        # just learnings-protocol.md + known-corrections.md
 ```
 
-Every reference file inside a SKILL.md uses a path relative to the repo root: `references/anti-patterns.md`, `assets/templates/case-template.html`, etc. There is no `${CLAUDE_PLUGIN_ROOT}` or other host-specific token.
+**Editing workflow:**
+
+```bash
+# 1. Edit the canonical file
+$EDITOR references/anti-patterns.md
+
+# 2. Fan out to every skill that cites it
+./scripts/sync-skills.sh
+
+# 3. Verify (would also be caught by CI)
+./scripts/sync-skills.sh --check
+
+# 4. Commit both the canonical edit AND the fanned-out copies
+git add references/ skills/
+git commit -m "Tighten AP14 detection heuristic"
+git push
+```
+
+Every reference file path inside a SKILL.md is stated relative to the SKILL's own folder: `references/anti-patterns.md` from `skills/audit/SKILL.md` resolves to `skills/audit/references/anti-patterns.md`. There is no `${CLAUDE_PLUGIN_ROOT}` or other host-specific token.
 
 ---
 

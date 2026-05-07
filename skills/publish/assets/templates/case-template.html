@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{TITLE}}</title>
+  <style>
+    /* INLINE STYLESHEET — inserted by :publish phase from case-style.css */
+    {{INLINE_CSS}}
+  </style>
+</head>
+<body>
+
+  <!-- Running header (hidden element; captured by @page string-set) -->
+  <span class="running-header">{{TITLE}} &bull; {{CASE_NUMBER}}</span>
+
+
+  <!-- ============================================================
+       COVER PAGE
+       ============================================================ -->
+  <div class="cover-page">
+
+    <!-- Thick editorial rule at top -->
+    <div class="cover-top-rule"></div>
+
+    <!-- Series bar: "Rehearsal Case Series" left | case number right -->
+    <div class="cover-series-bar">
+      <div class="cover-series-label">Rehearsal Case Series</div>
+      <div class="cover-case-meta">
+        <div class="case-number">{{CASE_NUMBER}}</div>
+        <div>{{DISCIPLINE_TAGS}}</div>
+        <div>{{CASE_TYPE_LABEL}}</div>
+      </div>
+    </div>
+
+    <!-- Title block -->
+    <h1 class="cover-title">{{TITLE}}</h1>
+    <div class="cover-subtitle">{{SUBTITLE}}</div>
+
+    <!-- Meta strip: 4 facts across a ruled band -->
+    <div class="cover-meta-strip">
+      <div class="cover-meta-item">
+        Decision Date
+        <strong>{{EVENT_DATE}}</strong>
+      </div>
+      <div class="cover-meta-item">
+        Setting
+        <strong>{{SETTING}}</strong>
+      </div>
+      <div class="cover-meta-item">
+        Length
+        <strong>{{WORD_COUNT}}</strong>
+      </div>
+      <div class="cover-meta-item">
+        Level
+        <strong>{{LEVEL}}</strong>
+      </div>
+    </div>
+
+    <!-- Abstract: parchment tint, black left border -->
+    <div class="cover-abstract">
+      {{ABSTRACT}}
+    </div>
+
+    <p class="cover-prepared-by">
+      Prepared by ATOM AI Research System &bull; {{PUBLISH_DATE}}
+    </p>
+
+    <!-- Footer: print-only disclaimer -->
+    <div class="cover-footer">
+      This case was prepared as the basis for class discussion rather than to illustrate
+      either effective or ineffective handling of an administrative situation.
+      Rehearsal Case Series &bull; {{CASE_NUMBER}} &bull; {{PUBLISH_DATE}}
+    </div>
+
+  </div>
+  <!-- END COVER PAGE -->
+
+
+  <!-- ============================================================
+       CASE BODY
+       Opening paragraph uses drop cap via p.lead::first-letter.
+       Each section: h3.section-head + body paragraphs.
+       ============================================================ -->
+
+  <!-- Opening paragraph — italic lead with drop cap -->
+  <p class="lead">{{OPENING_PARAGRAPH}}</p>
+
+
+  <!-- SECTION 1 -->
+  <h3 class="section-head">{{SECTION_1_HEADING}}</h3>
+  {{SECTION_1_BODY}}
+
+
+  <!-- SECTION 2 -->
+  <h3 class="section-head">{{SECTION_2_HEADING}}</h3>
+  {{SECTION_2_BODY}}
+
+
+  <!-- SECTION 3 -->
+  <h3 class="section-head">{{SECTION_3_HEADING}}</h3>
+  {{SECTION_3_BODY}}
+
+
+  <!-- SECTION 4 -->
+  <h3 class="section-head">{{SECTION_4_HEADING}}</h3>
+  {{SECTION_4_BODY}}
+
+
+  <!-- DECISION MOMENT — Mode A-C: temporal freeze ending -->
+  <!-- For Mode D, use the options-box block below instead -->
+  <h3 class="section-head">{{DECISION_MOMENT_HEADING}}</h3>
+  {{DECISION_MOMENT_BODY}}
+
+  <div class="temporal-freeze {{FREEZE_STYLE_CLASS}}">
+    {{TEMPORAL_FREEZE}}
+  </div>
+
+  <!-- MODE D ONLY — Structured options fork (preserved for scaffolded contexts) -->
+  <!-- In Modes A-C, this entire block is removed during HTML assembly -->
+  <!--
+  <div class="options-box">
+    <div class="options-box-heading">Options Available to {{PROTAGONIST_NAME}}</div>
+    <div class="option">
+      <div class="option-label">{{OPTION_A_LABEL}}</div>
+      <p>{{OPTION_A_BODY}}</p>
+    </div>
+    <div class="option">
+      <div class="option-label">{{OPTION_B_LABEL}}</div>
+      <p>{{OPTION_B_BODY}}</p>
+    </div>
+    <div class="option">
+      <div class="option-label">{{OPTION_C_LABEL}}</div>
+      <p>{{OPTION_C_BODY}}</p>
+    </div>
+  </div>
+  -->
+
+  {{CLOSING_PARAGRAPH}}
+
+
+  <!-- ============================================================
+       EXHIBITS
+       Each exhibit on its own page (page-break-before + after).
+       Duplicate this block for EXHIBIT_3, EXHIBIT_4, etc.
+       ============================================================ -->
+
+  <div class="exhibit-page">
+    <div class="exhibit-label-tag">Exhibit 1</div>
+    <div class="exhibit-title">{{EXHIBIT_1_TITLE}}</div>
+    {{EXHIBIT_1_TABLE}}
+    <p class="exhibit-caption">{{EXHIBIT_1_CAPTION}}</p>
+  </div>
+
+  <div class="exhibit-page">
+    <div class="exhibit-label-tag">Exhibit 2</div>
+    <div class="exhibit-title">{{EXHIBIT_2_TITLE}}</div>
+    {{EXHIBIT_2_TABLE}}
+    <p class="exhibit-caption">{{EXHIBIT_2_CAPTION}}</p>
+  </div>
+
+
+  <!-- ============================================================
+       SOURCE REGISTRY
+       One .source-entry per [SN] citation.
+       Tier badge class: tier-1, tier-2, or tier-3.
+       ============================================================ -->
+  <div class="source-registry">
+    <div class="source-registry-heading">Source Registry</div>
+    {{SOURCE_REGISTRY}}
+    <!--
+    Format each entry as:
+    <div class="source-entry">[S1] Author, "Title," Publication, URL, Date. <span class="tier-badge tier-1">Tier 1</span></div>
+    -->
+  </div>
+
+  <div class="case-footer">
+    This case was prepared for classroom discussion purposes only. It is not intended to
+    illustrate effective or ineffective handling of managerial situations. All financial data
+    are drawn from publicly available reporting and are not independently verified.
+    &copy; Rehearsal Case Series {{PUBLISH_YEAR}}.
+  </div>
+
+</body>
+</html>
