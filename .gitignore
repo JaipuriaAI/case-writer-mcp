@@ -33,3 +33,6 @@ templates/                    # local bootstrap from publish skill — not the c
 .DS_Store?
 ehthumbs.db
 Thumbs.db
+
+# Claude Code session artifacts (worktrees, etc.)
+.claude/
